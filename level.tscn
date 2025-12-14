@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://djp0nhv2hy7vn"]
+[gd_scene load_steps=5 format=3 uid="uid://djp0nhv2hy7vn"]
 
 [ext_resource type="Texture2D" uid="uid://dlqnrw60weh7t" path="res://icon.svg" id="1_u52ul"]
 [ext_resource type="Script" uid="uid://deao55v71te7v" path="res://movement.gd" id="2_vonw3"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonw3"]
-size = Vector2(256, 64)
+[ext_resource type="PackedScene" uid="uid://dp0k20wkhtt8a" path="res://obstacle.tscn" id="3_0b4ue"]
+[ext_resource type="Script" uid="uid://d1mhnj61utvo2" path="res://spawner.gd" id="4_0b4ue"]
 
 [node name="Level" type="Node2D"]
 
@@ -13,12 +12,13 @@ position = Vector2(508, 385)
 texture = ExtResource("1_u52ul")
 script = ExtResource("2_vonw3")
 
-[node name="Obstacle" type="Area2D" parent="."]
-position = Vector2(225, 942)
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(540, 2319)
+script = ExtResource("4_0b4ue")
+obstacle_prefab = ExtResource("3_0b4ue")
 
-[node name="Sprite2D" type="Sprite2D" parent="Obstacle"]
-scale = Vector2(2, 0.5)
-texture = ExtResource("1_u52ul")
+[node name="Timer" type="Timer" parent="Spawner"]
+wait_time = 0.5
+autostart = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
-shape = SubResource("RectangleShape2D_vonw3")
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]
