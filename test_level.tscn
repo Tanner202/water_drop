@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://co1mtgfsj022m"]
+[gd_scene load_steps=8 format=3 uid="uid://co1mtgfsj022m"]
 
 [ext_resource type="PackedScene" uid="uid://brpnb1yxsfpf1" path="res://player.tscn" id="1_1c2mv"]
 [ext_resource type="PackedScene" uid="uid://dp0k20wkhtt8a" path="res://obstacle.tscn" id="1_gojnm"]
 [ext_resource type="Script" uid="uid://deao55v71te7v" path="res://movement.gd" id="2_f7g2b"]
+[ext_resource type="Script" uid="uid://bt6p811ud2vcb" path="res://level_manager.gd" id="4_4ptq8"]
+[ext_resource type="Script" uid="uid://1144pa46lrba" path="res://start_text.gd" id="5_sb12i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1c2mv"]
 size = Vector2(126, 124)
@@ -10,6 +12,18 @@ size = Vector2(126, 124)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f7g2b"]
 
 [node name="TestLevel" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(540, 960)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(452, 191)
+script = ExtResource("2_f7g2b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_1c2mv")
+
+[node name="Player" parent="CharacterBody2D" instance=ExtResource("1_1c2mv")]
 
 [node name="Obstacles" type="Node" parent="."]
 
@@ -154,27 +168,40 @@ scale = Vector2(1, 10)
 [node name="Obstacle20" parent="Obstacles" instance=ExtResource("1_gojnm")]
 position = Vector2(882, 6812)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(540, 960)
+[node name="Boundaries" type="Node" parent="."]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(452, 191)
-script = ExtResource("2_f7g2b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("RectangleShape2D_1c2mv")
-
-[node name="Player" parent="CharacterBody2D" instance=ExtResource("1_1c2mv")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="Boundaries"]
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/StaticBody2D"]
 shape = SubResource("WorldBoundaryShape2D_f7g2b")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Boundaries"]
 position = Vector2(1080, 0)
 rotation = -1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/StaticBody2D2"]
 shape = SubResource("WorldBoundaryShape2D_f7g2b")
+
+[node name="LevelManager" type="Node" parent="."]
+script = ExtResource("4_4ptq8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 268.0
+offset_right = 20.0
+offset_bottom = 291.0
+grow_horizontal = 2
+pivot_offset = Vector2(20, 4)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Input to Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_sb12i")
