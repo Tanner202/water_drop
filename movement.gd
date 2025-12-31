@@ -1,19 +1,37 @@
-extends Node2D
+extends CharacterBody2D
 
-var touching_screen: bool
-var starting_x_pos := 0.0
-var starting_char_x_pos := 0.0
-var current_delta := 0.0
+@export var horizontal_accel := 300.0
+@export var drag_force := 300.0
+@export var max_horizontal_speed := 600.0
+@export var dead_zone := 8.0
 
-func _input(event: InputEvent) -> void:
+var target_x: float
+var touching := false
+
+func _ready():
+	target_x = global_position.x
+
+func _input(event):
 	if event is InputEventScreenTouch:
-		if event.pressed:
-			touching_screen = true
-			starting_x_pos = event.position.x
-			starting_char_x_pos = global_position.x
-		else:
-			touching_screen = false
-			current_delta = 0
-	elif event is InputEventScreenDrag and touching_screen:
-		current_delta = event.position.x - starting_x_pos
-		position.x = starting_char_x_pos + current_delta
+		touching = event.pressed
+		if touching:
+			target_x = get_global_mouse_position().x
+
+	if event is InputEventScreenDrag:
+		target_x = event.position.x
+
+func _physics_process(delta):
+
+	if touching:
+		var dx = target_x - global_position.x
+		var accel = dx * horizontal_accel * delta
+		velocity.x += accel
+		if abs(dx) < dead_zone:
+			velocity.x = 0
+	else:
+		velocity.x = move_toward(velocity.x, 0.0, drag_force * delta)
+
+	# Clamp speed
+	velocity.x = clamp(velocity.x, -max_horizontal_speed, max_horizontal_speed)
+
+	move_and_slide()

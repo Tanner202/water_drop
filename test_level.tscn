@@ -1,0 +1,180 @@
+[gd_scene load_steps=6 format=3 uid="uid://co1mtgfsj022m"]
+
+[ext_resource type="PackedScene" uid="uid://brpnb1yxsfpf1" path="res://player.tscn" id="1_1c2mv"]
+[ext_resource type="PackedScene" uid="uid://dp0k20wkhtt8a" path="res://obstacle.tscn" id="1_gojnm"]
+[ext_resource type="Script" uid="uid://deao55v71te7v" path="res://movement.gd" id="2_f7g2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1c2mv"]
+size = Vector2(126, 124)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f7g2b"]
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="Obstacle" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(130, 1550)
+
+[node name="Obstacle2" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(550, 1737)
+
+[node name="Obstacle3" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(251, 2031)
+
+[node name="Obstacle4" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(410, 2396)
+
+[node name="Obstacle5" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(866, 2940)
+
+[node name="Obstacle6" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(305, 3444)
+
+[node name="Obstacle7" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(154, 2889)
+
+[node name="Obstacle8" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(237, 3716)
+
+[node name="Obstacle9" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(742, 3970)
+
+[node name="Obstacle10" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(742, 3970)
+
+[node name="Obstacle11" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(629, 4146)
+
+[node name="Obstacle12" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(540, 4339)
+
+[node name="Obstacle13" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(177, 3906)
+
+[node name="Obstacle14" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(517, 4545)
+
+[node name="Obstacle15" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(213, 5223)
+
+[node name="Obstacle16" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(690, 5709)
+
+[node name="Obstacle17" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(296, 6272)
+
+[node name="Obstacle18" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(875, 6272)
+
+[node name="Obstacle19" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(370, 7738)
+scale = Vector2(1, 10)
+
+[node name="Obstacle21" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(917, 7732)
+scale = Vector2(1, 10)
+
+[node name="Obstacle22" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(219, 9013)
+scale = Vector2(1, 10)
+
+[node name="Obstacle23" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(818, 8997)
+scale = Vector2(1, 10)
+
+[node name="Obstacle24" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1094, 8997)
+scale = Vector2(1, 10)
+
+[node name="Obstacle25" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1365, 8992)
+scale = Vector2(1, 10)
+
+[node name="Obstacle26" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(188, 10570)
+scale = Vector2(1, 10)
+
+[node name="Obstacle27" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(454, 10570)
+scale = Vector2(1, 10)
+
+[node name="Obstacle28" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(735, 10565)
+scale = Vector2(1, 10)
+
+[node name="Obstacle29" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1250, 10565)
+scale = Vector2(1, 10)
+
+[node name="Obstacle30" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1516, 10560)
+scale = Vector2(1, 10)
+
+[node name="Obstacle31" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(183, 12075)
+scale = Vector2(1, 10)
+
+[node name="Obstacle32" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(917, 12075)
+scale = Vector2(1, 10)
+
+[node name="Obstacle33" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1177, 12059)
+scale = Vector2(1, 10)
+
+[node name="Obstacle34" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(146, 13445)
+scale = Vector2(1, 10)
+
+[node name="Obstacle35" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(755, 13393)
+scale = Vector2(1, 10)
+
+[node name="Obstacle36" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1026, 13367)
+scale = Vector2(1, 10)
+
+[node name="Obstacle37" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(469, 14658.001)
+scale = Vector2(1, 10)
+
+[node name="Obstacle38" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(1078, 14632.001)
+scale = Vector2(1, 10)
+
+[node name="Obstacle39" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(143, 15643)
+scale = Vector2(1, 10)
+
+[node name="Obstacle40" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(817, 15672)
+scale = Vector2(1, 10)
+
+[node name="Obstacle20" parent="Obstacles" instance=ExtResource("1_gojnm")]
+position = Vector2(882, 6812)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(540, 960)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(452, 191)
+script = ExtResource("2_f7g2b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_1c2mv")
+
+[node name="Player" parent="CharacterBody2D" instance=ExtResource("1_1c2mv")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_f7g2b")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(1080, 0)
+rotation = -1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("WorldBoundaryShape2D_f7g2b")
