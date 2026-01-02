@@ -1,20 +1,40 @@
-[gd_scene load_steps=8 format=3 uid="uid://co1mtgfsj022m"]
+[gd_scene load_steps=11 format=3 uid="uid://co1mtgfsj022m"]
 
 [ext_resource type="PackedScene" uid="uid://brpnb1yxsfpf1" path="res://player.tscn" id="1_1c2mv"]
 [ext_resource type="PackedScene" uid="uid://dp0k20wkhtt8a" path="res://obstacle.tscn" id="1_gojnm"]
 [ext_resource type="Script" uid="uid://deao55v71te7v" path="res://movement.gd" id="2_f7g2b"]
-[ext_resource type="Script" uid="uid://bt6p811ud2vcb" path="res://level_manager.gd" id="4_4ptq8"]
+[ext_resource type="Script" uid="uid://btfd6ii6l7sw7" path="res://camera_2d.gd" id="2_gbhdq"]
+[ext_resource type="Texture2D" uid="uid://dlqnrw60weh7t" path="res://icon.svg" id="5_gbhdq"]
 [ext_resource type="Script" uid="uid://1144pa46lrba" path="res://start_text.gd" id="5_sb12i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y646j"]
+size = Vector2(124, 124)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1c2mv"]
 size = Vector2(126, 124)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sb12i"]
+size = Vector2(130, 130)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f7g2b"]
 
 [node name="TestLevel" type="Node2D"]
 
+[node name="Water" type="Area2D" parent="."]
+position = Vector2(659, 16597)
+scale = Vector2(15, 2)
+collision_layer = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_y646j")
+
+[node name="Sprite2D" type="Sprite2D" parent="Water"]
+texture = ExtResource("5_gbhdq")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(540, 960)
+script = ExtResource("2_gbhdq")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(452, 191)
@@ -24,6 +44,12 @@ script = ExtResource("2_f7g2b")
 shape = SubResource("RectangleShape2D_1c2mv")
 
 [node name="Player" parent="CharacterBody2D" instance=ExtResource("1_1c2mv")]
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("RectangleShape2D_sb12i")
 
 [node name="Obstacles" type="Node" parent="."]
 
@@ -183,9 +209,6 @@ rotation = -1.5707964
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/StaticBody2D2"]
 shape = SubResource("WorldBoundaryShape2D_f7g2b")
 
-[node name="LevelManager" type="Node" parent="."]
-script = ExtResource("4_4ptq8")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -205,3 +228,5 @@ text = "Input to Start"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_sb12i")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
