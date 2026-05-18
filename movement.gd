@@ -1,12 +1,19 @@
 extends CharacterBody2D
 
-@export var horizontal_accel := 2000.0
-@export var drag_force := 1000.0
-@export var max_horizontal_speed := 800.0
-@export var dead_zone := 8.0
+const MAX_HORIZONTAL_SPEED := 400.0
+const ACCEL := 3000.0
+const DECEL := 4200.0
+
+# Makes direction changes feel slightly soft
+const TURN_MULTIPLIER := 0.7
+
+# Visual tilt
+const MAX_ROTATION := 0.2
+const ROTATION_SPEED := 8.0
 
 var target_x: float
 var prev_target_x: float = 0
+var direction: = 0
 var touching := false
 
 func _ready():
@@ -24,14 +31,44 @@ func _input(event):
 		target_x = event.position.x
 
 func _physics_process(delta):
-	if touching:
-		var accel = sign(target_x - prev_target_x) * horizontal_accel * delta
-		velocity.x += accel
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, drag_force * delta)
+	var input_dir := Input.get_axis("left", "right")
+	var target_speed := input_dir * MAX_HORIZONTAL_SPEED
 
-	# Clamp speed
-	velocity.x = clamp(velocity.x, -max_horizontal_speed, max_horizontal_speed)
+	# -------------------------
+	# Horizontal movement
+	# -------------------------
+	if input_dir != 0:
+
+		# Slightly softer when changing directions
+		var accel := ACCEL
+
+		if sign(input_dir) != sign(velocity.x) and velocity.x != 0:
+			accel *= TURN_MULTIPLIER
+
+		velocity.x = move_toward(
+			velocity.x,
+			target_speed,
+			accel * delta
+		)
+
+	else:
+		# Fast stop = responsive dodging
+		velocity.x = move_toward(
+			velocity.x,
+			0,
+			DECEL * delta
+		)
+
+	# -------------------------
+	# Visual rotation
+	# -------------------------
+	var target_rotation := (velocity.x / MAX_HORIZONTAL_SPEED) * MAX_ROTATION
+
+	rotation = lerp(
+		rotation,
+		target_rotation,
+		ROTATION_SPEED * delta
+	)
 
 	var collision = move_and_collide(velocity * delta)
 	if collision:
