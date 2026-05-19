@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
-const MAX_HORIZONTAL_SPEED := 400.0
-const ACCEL := 3000.0
+const FALLING_ACCEL := 500
+const MAX_VERTICAL_SPEED := 1500
+const MAX_HORIZONTAL_SPEED := 600.0
+const ACCEL := 4000.0
 const DECEL := 4200.0
 
 # Makes direction changes feel slightly soft
@@ -15,6 +17,7 @@ var target_x: float
 var prev_target_x: float = 0
 var direction: = 0
 var touching := false
+var level_started = false
 
 func _ready():
 	target_x = global_position.x
@@ -31,6 +34,8 @@ func _input(event):
 		target_x = event.position.x
 
 func _physics_process(delta):
+	if !level_started: return
+	
 	var input_dir := Input.get_axis("left", "right")
 	var target_speed := input_dir * MAX_HORIZONTAL_SPEED
 
@@ -58,6 +63,12 @@ func _physics_process(delta):
 			0,
 			DECEL * delta
 		)
+	
+	velocity.y = move_toward(
+		velocity.y,
+		MAX_VERTICAL_SPEED,
+		FALLING_ACCEL * delta
+	)
 
 	# -------------------------
 	# Visual rotation
@@ -81,4 +92,4 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	LevelManager.end()
 
 func on_level_started():
-	velocity.y = 1000
+	level_started = true
