@@ -5,6 +5,8 @@ const MAX_VERTICAL_SPEED := 1500
 const MAX_HORIZONTAL_SPEED := 600.0
 const ACCEL := 4000.0
 const DECEL := 4200.0
+const HORIZONTAL_DASH_FORCE := 2000
+const DASH_TIME := 0.1
 
 # Makes direction changes feel slightly soft
 const TURN_MULTIPLIER := 0.7
@@ -35,6 +37,16 @@ func _input(event):
 	if event is InputEventScreenDrag:
 		prev_target_x = target_x
 		target_x = event.position.x
+	
+	if event.is_action_pressed("dash"):
+		var direction = Input.get_axis("left", "right")
+		dash(direction)
+
+func dash(direction):
+	var prev_velocity = velocity.x
+	velocity.x = direction * HORIZONTAL_DASH_FORCE
+	await get_tree().create_timer(DASH_TIME).timeout
+	velocity.x = prev_velocity
 
 func _physics_process(delta):
 	if !level_started: return
