@@ -1,20 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://co1mtgfsj022m"]
+[gd_scene load_steps=10 format=3 uid="uid://co1mtgfsj022m"]
 
 [ext_resource type="PackedScene" uid="uid://brpnb1yxsfpf1" path="res://player.tscn" id="1_1c2mv"]
 [ext_resource type="PackedScene" uid="uid://dp0k20wkhtt8a" path="res://obstacle.tscn" id="1_gojnm"]
-[ext_resource type="Script" uid="uid://deao55v71te7v" path="res://movement.gd" id="2_f7g2b"]
 [ext_resource type="Script" uid="uid://btfd6ii6l7sw7" path="res://camera_2d.gd" id="2_gbhdq"]
 [ext_resource type="Texture2D" uid="uid://dlqnrw60weh7t" path="res://icon.svg" id="5_gbhdq"]
 [ext_resource type="Script" uid="uid://1144pa46lrba" path="res://start_text.gd" id="5_sb12i"]
+[ext_resource type="PackedScene" uid="uid://d33lpy6d63o1p" path="res://coin.tscn" id="6_gbhdq"]
+[ext_resource type="Script" uid="uid://byujo3hjaocvf" path="res://coins_collected.gd" id="6_y646j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y646j"]
 size = Vector2(124, 124)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1c2mv"]
-size = Vector2(126, 124)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sb12i"]
-size = Vector2(130, 130)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f7g2b"]
 
@@ -37,22 +32,10 @@ position = Vector2(540, 180)
 offset = Vector2(0, 780)
 limit_enabled = false
 script = ExtResource("2_gbhdq")
-target = NodePath("../CharacterBody2D")
+target = NodePath("../Player")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("1_1c2mv")]
 position = Vector2(540, 180)
-script = ExtResource("2_f7g2b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("RectangleShape2D_1c2mv")
-
-[node name="Player" parent="CharacterBody2D" instance=ExtResource("1_1c2mv")]
-
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
-shape = SubResource("RectangleShape2D_sb12i")
 
 [node name="Obstacles" type="Node" parent="."]
 
@@ -232,4 +215,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_sb12i")
 
-[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
+[node name="CoinsCollected" type="Label" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+offset_right = 72.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+script = ExtResource("6_y646j")
+player = NodePath("../../Player")
+
+[node name="Coin" parent="." instance=ExtResource("6_gbhdq")]
+position = Vector2(540, 1107)
+
+[node name="Coin2" parent="." instance=ExtResource("6_gbhdq")]
+position = Vector2(887, 2031)

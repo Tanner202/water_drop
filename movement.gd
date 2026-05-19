@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 const FALLING_ACCEL := 500
 const MAX_VERTICAL_SPEED := 1500
@@ -18,6 +18,9 @@ var prev_target_x: float = 0
 var direction: = 0
 var touching := false
 var level_started = false
+var coins_collected = 0
+
+signal coin_collected(amount)
 
 func _ready():
 	target_x = global_position.x
@@ -90,6 +93,10 @@ func _physics_process(delta):
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	print("Win")
 	LevelManager.end()
+
+func collect_coin():
+	coins_collected += 1
+	coin_collected.emit(coins_collected)
 
 func on_level_started():
 	level_started = true
